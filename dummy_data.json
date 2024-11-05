@@ -1,0 +1,72 @@
+[
+    {
+        "id": 1,
+        "name": "Wooden Desk",
+        "description": "A sturdy wooden desk, showing minor scratches but still functional for any workspace.",
+        "latitude": 50.8231,
+        "longitude": -0.1381
+    },
+    {
+        "id": 2,
+        "name": "Lawn Mower",
+        "description": "A reliable push lawn mower, lightly used, ready to keep your yard looking neat.",
+        "latitude": 50.825,
+        "longitude": -0.1348
+    },
+    {
+        "id": 3,
+        "name": "Office Chair",
+        "description": "A comfortable office chair, with a few scuff marks, perfect for home or office use.",
+        "latitude": 50.8225,
+        "longitude": -0.1392
+    },
+    {
+        "id": 4,
+        "name": "Dining Set",
+        "description": "A complete dining set with a table and four chairs, in good condition, ideal for family gatherings.",
+        "latitude": 50.8241,
+        "longitude": -0.1435
+    },
+    {
+        "id": 5,
+        "name": "Bookshelf",
+        "description": "A wooden bookshelf with some scratches, but still sturdy and useful for storage.",
+        "latitude": 50.8213,
+        "longitude": -0.1405
+    },
+    {
+        "id": 6,
+        "name": "Baby Crib",
+        "description": "A sturdy baby crib, lightly used, meets safety standards.",
+        "latitude": 50.8262,
+        "longitude": -0.1356
+    },
+    {
+        "id": 7,
+        "name": "Exercise Bike",
+        "description": "An upright exercise bike, in good working condition, perfect for home workouts.",
+        "latitude": 50.822,
+        "longitude": -0.1368
+    },
+    {
+        "id": 8,
+        "name": "Sofa",
+        "description": "A comfortable two-seater sofa in good condition, perfect for lounging.",
+        "latitude": 50.8238,
+        "longitude": -0.1411
+    },
+    {
+        "id": 9,
+        "name": "Bicycle",
+        "description": "A mountain bike in decent condition, with working gears and brakes.",
+        "latitude": "50.8255",
+        "longitude": "-0.1387"
+    },
+    {
+        "id": 10,
+        "name": "Office Desk",
+        "description": "A spacious office desk with a few scratches, good for a home office setup.",
+        "latitude": "50.8228",
+        "longitude": "-0.1369"
+    }
+]

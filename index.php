@@ -7,21 +7,30 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="leaflet/leaflet.css" />
     <script src="leaflet/leaflet.js"></script>
-    <script src="map.js" defer></script>
+    <script src="js/map.js" defer></script>
 
-    <title>Skip App</title>
+    <title>Skip App - In Development</title>
 </head>
 
 <body>
     <main>
-        <!-- <div id="map"></div> -->
-        <form action="includes/formhandler.inc.php" method="post">
-            <label for="oname">Object Name:</label>
-            <input type="text" id="oname" name="oname">
-            <label for="odescription">Description:</label>
-            <input type="text" id="odescription" name="odescription">
-            <button type="submit">Submit</button>
-        </form>
+        <h1 style="color: #ff6600;">Skip App - Development Version</h1>
+        <div class="map-container">
+            <div id="map">Loading map...</div>
+            <form action="includes/formhandler.php" method="post">
+                <h2>Add an Item</h2>
+                <label for="iname">Item Name:</label>
+                <input type="text" id="iname" name="iname" placeholder="Enter item name">
+                <label for="idescription">Description:</label>
+                <input type="text" id="idescription" name="idescription" placeholder="Enter description">
+                <label for="ilatitude">Latitude:</label>
+                <input type="text" id="ilatitude" name="ilatitude" placeholder="Enter latitude">
+                <label for="ilongitude">Longitude:</label>
+                <input type="text" id="ilongitude" name="ilongitude" placeholder="Enter longitude">
+                <button type="submit">Submit Item</button>
+            </form>
+        </div>
+
     </main>
 </body>
 
