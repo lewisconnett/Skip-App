@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="leaflet/leaflet.css" />
     <script src="leaflet/leaflet.js"></script>
     <script src="js/map.js" defer></script>
-
+    <script src="js/formhandler.js" defer></script>
     <title>Skip App - In Development</title>
 </head>
 
@@ -16,17 +16,17 @@
     <main>
         <h1 style="color: #ff6600;">Skip App - Development Version</h1>
         <div class="map-container">
-            <div id="map">Loading map...</div>
-            <form action="includes/formhandler.php" method="post">
+            <div id="map">Map loading... (development mode)</div>
+            <form id="addItemForm" action="includes/formhandler.php" method="post">
                 <h2>Add an Item</h2>
                 <label for="iname">Item Name:</label>
-                <input type="text" id="iname" name="iname" placeholder="Enter item name">
+                <input type="text" id="iname" name="iname" placeholder="Enter item name" required>
                 <label for="idescription">Description:</label>
-                <input type="text" id="idescription" name="idescription" placeholder="Enter description">
+                <input type="text" id="idescription" name="idescription" placeholder="Enter description" required>
                 <label for="ilatitude">Latitude:</label>
-                <input type="text" id="ilatitude" name="ilatitude" placeholder="Enter latitude">
+                <input type="text" id="ilatitude" name="ilatitude" placeholder="Enter latitude" required>
                 <label for="ilongitude">Longitude:</label>
-                <input type="text" id="ilongitude" name="ilongitude" placeholder="Enter longitude">
+                <input type="text" id="ilongitude" name="ilongitude" placeholder="Enter longitude" required>
                 <button type="submit">Submit Item</button>
             </form>
         </div>

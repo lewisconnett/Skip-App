@@ -1,4 +1,7 @@
-$background-colour: #e0e0e0;
+$background-colour: #f0f0f0;
+$accent-colour: #ff6600;
+$border-radius: 8px;
+$shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
 
 body {
     background-color: $background-colour;
@@ -15,64 +18,72 @@ main {
 
 .map-container {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
+    max-width: 800px;
     margin-top: 2rem;
 }
 
 #map {
     height: 500px;
     width: 100%;
-    max-width: 800px;
-    z-index: 0;
-    border: 2px dashed #ff6600;
-    border-radius: 8px;
+    border: 2px dotted $accent-colour;
+    border-radius: $border-radius;
     margin-bottom: 20px;
-    background-color: #f5f5f5;
+    background-color: #f9f9f9;
+    box-shadow: $shadow-light;
+    color: #999;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 form {
-    width: 320px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: 400px;
     padding: 20px;
     background-color: #ffffff;
-    border: 2px solid #ff6600;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border: 1px dashed $accent-colour;
+    border-radius: $border-radius;
+    box-shadow: $shadow-light;
     text-align: left;
 
     h2 {
-        font-size: 1.5rem;
-        margin-bottom: 20px; 
-        text-align: center; 
-        color: #ff6600;
+        font-size: 1.25rem;
+        margin-bottom: 15px;
+        text-align: center;
+        color: $accent-colour;
     }
 
     label {
         display: block;
-        margin-bottom: 8px;
-        font-weight: bold;
-        color: #333;
+        margin-bottom: 6px;
+        font-weight: normal;
+        color: #666;
     }
 
     input[type="text"] {
         width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
+        padding: 8px;
+        margin-bottom: 12px;
+        border: 1px solid #ddd;
         border-radius: 4px;
         box-sizing: border-box;
+        color: #333;
 
         &:focus {
-            border-color: #ff6600;
+            border-color: $accent-colour;
             outline: none;
-            box-shadow: 0 0 5px rgba(255, 102, 0, 0.2);
+            box-shadow: 0 0 4px rgba(255, 102, 0, 0.2);
         }
     }
 
     button {
         width: 100%;
         padding: 10px;
-        background-color: #ff6600;
+        background-color: $accent-colour;
         color: #fff;
         font-weight: bold;
         border: none;
@@ -81,7 +92,7 @@ form {
         transition: background-color 0.3s;
 
         &:hover {
-            background-color: #e55b00;
+            background-color: darken($accent-colour, 10%);
         }
     }
 }
