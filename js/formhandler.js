@@ -1,27 +1,17 @@
 window.addEventListener('load', () => {
     const form = document.querySelector('#addItemForm');
 
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
         event.preventDefault();
+
+        const usersLocation = await getUsersLocation();
 
         const itemName = form.elements['iname'].value;
         const itemDescription = form.elements['idescription'].value;
+        const itemLatitude = usersLocation.latitude;
+        const itemLongitude = usersLocation.longitude;
 
         // TODO: Capture users location when they submit the form
-
-        /* 
-        
-        1. Get current position using navigator
-
-        2. Success Call back function -> Calls a function that creates the form data
-
-        3. Error Call back function -> Calls a function 
-
-        
-        */
-
-        const itemLatitude = form.elements['ilatitude'].value;
-        const itemLongitude = form.elements['ilongitude'].value;
 
         console.log(itemName, itemDescription, itemLatitude, itemLongitude);
 

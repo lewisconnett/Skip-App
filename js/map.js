@@ -9,10 +9,6 @@ async function getUsersLocation() {
                     const { latitude, longitude } = position.coords;
 
                     const userLocation = { latitude, longitude };
-                    console.log(
-                        'User location has been stored: ',
-                        userLocation
-                    );
                     resolve(userLocation);
                 },
                 (error) => {
@@ -56,7 +52,6 @@ async function initMap(latitude, longitude) {
             attribution:
                 '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         }).addTo(map);
-        console.log('The map was successfully initialised');
         try {
             const items = await fetchObjects();
             addItemMarkers(items, map);
