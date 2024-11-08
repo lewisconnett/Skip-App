@@ -11,8 +11,6 @@ window.addEventListener('load', () => {
         const itemLatitude = usersLocation.latitude;
         const itemLongitude = usersLocation.longitude;
 
-        // TODO: Capture users location when they submit the form
-
         console.log(itemName, itemDescription, itemLatitude, itemLongitude);
 
         //TODO: Validate and sanitise inputs on client side
