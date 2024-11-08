@@ -6,6 +6,20 @@ window.addEventListener('load', () => {
 
         const itemName = form.elements['iname'].value;
         const itemDescription = form.elements['idescription'].value;
+
+        // TODO: Capture users location when they submit the form
+
+        /* 
+        
+        1. Get current position using navigator
+
+        2. Success Call back function -> Calls a function that creates the form data
+
+        3. Error Call back function -> Calls a function 
+
+        
+        */
+
         const itemLatitude = form.elements['ilatitude'].value;
         const itemLongitude = form.elements['ilongitude'].value;
 

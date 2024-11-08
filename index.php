@@ -16,7 +16,7 @@
     <main>
         <h1 style="color: #ff6600;">Skip App - Development Version</h1>
         <div class="map-container">
-            <div id="map">Map loading... (development mode)</div>
+            <div id="map">Map loading...</div>
             <form id="addItemForm" action="includes/formhandler.php" method="post">
                 <h2>Add an Item</h2>
                 <label for="iname">Item Name:</label>
