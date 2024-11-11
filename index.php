@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="leaflet/leaflet.css" />
     <script src="leaflet/leaflet.js"></script>
     <script src="js/map.js" defer></script>
-    <script src="js/formhandler.js" defer></script>
+    <script type="module" src="js/formhandler.js" defer></script>
+
     <title>SkipFind - In Development</title>
 </head>
 
@@ -23,10 +24,11 @@
                 <input type="text" id="iname" name="iname" placeholder="Enter item name" required>
                 <label for="idescription">Description:</label>
                 <input type="text" id="idescription" name="idescription" placeholder="Enter description" required>
+                <label for="iimage" accepts="image/png, image/jpg">Upload an Image: </label>
+                <input type="file" id="iimage" name="iimage" required></input>
                 <button type="submit">Submit Item</button>
             </form>
         </div>
-
     </main>
 </body>
 

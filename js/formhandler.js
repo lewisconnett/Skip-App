@@ -1,22 +1,23 @@
 const API_URL = 'includes/api.php';
 
-async function submitFormData(formData) {
-    fetch(API_URL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-    })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .catch((error) => {
-            console.error('Error:', error);
+async function submitFormData(formDataToSend) {
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            body: formDataToSend,
         });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error:', errorData.error);
+            throw new Error(errorData.error || 'Network response was not ok');
+        }
+        const result = await response.json();
+        console.log('Success:', result);
+        return result;
+    } catch (error) {
+        throw new Error('Error: ', error);
+    }
 }
 
 window.addEventListener('load', () => {
@@ -27,36 +28,39 @@ window.addEventListener('load', () => {
 
         const itemName = form.elements['iname'].value;
         const itemDescription = form.elements['idescription'].value;
+        const imageFile = form.elements['iimage'].files[0];
 
-        let usersLocation;
+        let locationCoordinates;
         try {
-            usersLocation = await getUsersLocation();
+            locationCoordinates = await getUsersLocation();
         } catch (error) {
             console.error("Error gathering user's location: ", error);
             alert('There was a problem retrieving your location.');
-            usersLocation = {
+            locationCoordinates = {
                 latitude: DEFAULT_LATITUDE,
                 longitude: DEFAULT_LONGITUDE,
             };
         }
 
-        const formData = {
-            name: itemName,
-            description: itemDescription,
-            latitude: usersLocation.latitude,
-            longitude: usersLocation.longitude,
-        };
+        const formData = new FormData();
+        formData.append('name', itemName);
+        formData.append('description', itemDescription);
+        formData.append('latitude', locationCoordinates.latitude);
+        formData.append('longitude', locationCoordinates.longitude);
+        formData.append('imageFile', imageFile);
 
-        form.querySelector('button[type="submit"]').disabled = true;
+        const submitButton = form.querySelector('button[type="submit"]');
+
+        submitButton.disabled = true;
 
         try {
-            const result = await submitFormData(formData);
-            alert('Record created.');
+            await submitFormData(formData);
+            alert("Item added successfully!");
+            form.reset();
         } catch (error) {
             alert('An error occurred while submitting. Please try again.');
         } finally {
-            form.querySelector('button[type="submit"]').disabled = false;
-            location.reload();
+            submitButton.disabled = false;
         }
     });
 });
