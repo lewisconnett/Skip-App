@@ -45,7 +45,9 @@ function handleGeolocationErrors(error) {
 
 async function initMap(latitude, longitude) {
     try {
-        const map = L.map('map').setView([latitude, longitude], 15);
+        const map = L.map('map', {
+            zoomControl: false,
+        }).setView([latitude, longitude], 15);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
@@ -53,8 +55,8 @@ async function initMap(latitude, longitude) {
                 '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         }).addTo(map);
         try {
-            const items = await fetchObjects();
-            addItemMarkers(items, map);
+            const availableItems = await fetchObjects();
+            addItemMarkers(availableItems.data, map);
         } catch (error) {
             console.error(
                 'There was an error adding the item markers to the map: ',
@@ -71,20 +73,18 @@ async function initMap(latitude, longitude) {
 
 async function fetchObjects() {
     try {
-        const response = await fetch('includes/api.php');
-
-        if (!response.ok) {
-            throw new Error('Network response indicates a failure.');
-        }
-        return await response.json();
+        const response = await axios.get(
+            'https://lc1453.brighton.domains/skipapp/includes/api.php'
+        );
+        return response.data;
     } catch (error) {
-        console.error('An issue was detected in the fetch operation: ', error);
+        console.error('Error fetching objects: ', error);
         return [];
     }
 }
 
-function addItemMarkers(itemData, map) {
-    for (var item of itemData) {
+function addItemMarkers(items, map) {
+    for (var item of items) {
         if (item.latitude && item.longitude) {
             L.marker([item.latitude, item.longitude])
                 .addTo(map)
@@ -92,6 +92,34 @@ function addItemMarkers(itemData, map) {
                     className: 'marker-popup',
                 });
         }
+    }
+}
+
+async function getLocationName(latitude, longitude) {
+    if (!latitude || !longitude) {
+        console.error(
+            'Longitude and latitude coordinates are empty or invalid'
+        );
+        return null;
+    }
+
+    try {
+        const response = await axios.get(
+            `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+        );
+        const data = response.data;
+
+        if (data && data.address) {
+            const address = data.address;
+            const locationName = address.suburb || 'Location not found';
+            return locationName;
+        } else {
+            console.error('Location not found in the response');
+            return null;
+        }
+    } catch (error) {
+        console.error('Error fetching location:', error);
+        return null;
     }
 }
 

@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Azeret+Mono:ital,wght@0,100..900;1,100..900&family=Fragment+Mono:ital@0;1&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+$background-colour: #f0f0f0;
+$accent-colour: #ff6600;
+$border-radius: 8px;
+$shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+body {
+    background-color: $background-colour;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+}
+
+main {
+    height: 100dvh;
+    position: relative;
+
+    #map {
+        z-index: 0;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .overlay-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 0.25rem;
+        padding: 0.5rem;
+        background-color: white;
+        cursor: pointer;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    }
+
+    .top-overlay-content {
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        background-color: transparent;
+        max-width: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 4rem;
+
+        #settings-icon {
+            margin-right: 2rem;
+        }
+
+        #location-tag-container {
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            display: flex;
+            align-items: center;
+            margin-left: 2rem;
+
+            #location-tag {
+                margin: 0;
+                font-weight: 400;
+                font-size: 1rem;
+                margin-left: 0.25rem;
+            }
+        }
+    }
+
+    .bottom-overlay-content {
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        justify-content: right;
+        height: 4rem;
+        width: 100%;
+        margin-bottom: 2rem;
+        align-items: center;
+
+        #add-item-icon {
+            margin-right: 2rem;
+        }
+    }
+}
+
+.map-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    margin-top: 2rem;
+}
+
+form {
+    z-index: 2;
+    position: fixed; 
+    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px dashed $accent-colour;
+    border-radius: $border-radius;
+    box-shadow: $shadow-light;
+    text-align: left;
+
+    h2 {
+        font-size: 1.25rem;
+        margin-bottom: 15px;
+        text-align: center;
+        color: $accent-colour;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: normal;
+        color: #666;
+    }
+
+    input[type='text'] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+        color: #333;
+
+        &:focus {
+            border-color: $accent-colour;
+            outline: none;
+            box-shadow: 0 0 4px rgba(255, 102, 0, 0.2);
+        }
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        background-color: $accent-colour;
+        color: #fff;
+        font-weight: bold;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: darken($accent-colour, 10%);
+        }
+    }
+}

@@ -9,52 +9,83 @@ function fetchItems($pdo)
 {
     $sql = "SELECT * FROM `objects`";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($result, JSON_PRETTY_PRINT);
+
+    if ($stmt->execute()) {
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        http_response_code(200);
+
+        $data = [
+            'status' => 'success',
+            'message' => 'Items fetched successfully',
+            'data' => $result
+        ];
+
+        echo json_encode($data);
+    } else {
+
+        http_response_code(500);
+
+        $data = [
+            'status' => 'error',
+            'message' => 'Error fetching items'
+        ];
+
+        echo json_encode($data);
+    }
 }
 
 function addItem($pdo)
 {
-    // Gather info from POST request
-    $name = htmlspecialchars($_POST['name']);
-    $description = htmlspecialchars($_POST['description']);
-    $latitude = htmlspecialchars($_POST['latitude']);
-    $longitude = htmlspecialchars($_POST['longitude']);
 
-    // File upload
-    $filename = $_FILES['imageFile']['name'];
-    $target_dir = 'uploads/';
-    $target_file = $target_dir . basename($filename);
-
-    // File upload
-    if (isset($_FILES["imageFile"]) && $_FILES["imageFile"]["error"] == 0) {
-        if (move_uploaded_file($_FILES["imageFile"]["tmp_name"], $target_file)) {
-            echo "The file " . basename($filename) . " has been uploaded successfully!";
-        } else {
-            echo json_encode([
-                "status" => "error",
-                "message" => "Error uploading file."
-            ]);
-            return;
-        }
-    } else {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        http_response_code(405);
         echo json_encode([
-            "status" => "error",
-            "message" => "No file uploaded or error in file upload."
+            'status' => 'error',
+            'message' => 'Method Not Allowed'
         ]);
         return;
     }
 
+    // Check for required fields
+    if (!isset($_POST['iname']) || !isset($_POST['idescription']) || !isset($_POST['ilatitude']) || !isset($_POST['ilongitude']) || !isset($_FILES['iimage'])) {
+        http_response_code(400);
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Missing required fields'
+        ]);
+        return;
+    }
+
+    $name = htmlspecialchars($_POST['iname']);
+    $description = htmlspecialchars($_POST['idescription']);
+    $latitude = htmlspecialchars($_POST['ilatitude']);
+    $longitude = htmlspecialchars($_POST['ilongitude']);
+    $image = $_FILES['iimage']['name'];
+
+    $target_dir = '../uploads/';
+    $target_file = $target_dir . basename($image);
+
+    if (move_uploaded_file($_FILES['iimage']['tmp_name'], $target_file)) {
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Image was uploaded'
+        ]);
+    } else {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Image failed to upload'
+        ]);
+    }
 
     // Insert record into database
-    $sql = "INSERT INTO objects (name, description, latitude, longitude, image_filename) VALUES (:name, :description, :latitude, :longitude, :image_filename)";
+    $sql = "INSERT INTO objects (name, description, latitude, longitude, imagename) VALUES (:name, :description, :latitude, :longitude, :imagename)";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':name', $name);
     $stmt->bindParam(':description', $description);
     $stmt->bindParam(':latitude', $latitude);
     $stmt->bindParam(':longitude', $longitude);
-    $stmt->bindParam(':image_filename', $filename);
+    $stmt->bindParam(':imagename', $image);
 
     if ($stmt->execute()) {
         echo json_encode([
