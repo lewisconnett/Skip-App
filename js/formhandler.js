@@ -1,4 +1,4 @@
-const API_URL = 'https://lc1453.brighton.domains/skipapp/includes/api.php';
+const API_URL = 'https://lc1453.brighton.domains/SkipFind/includes/api.php';
 
 async function submitFormData(formData) {
     try {

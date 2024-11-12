@@ -74,7 +74,7 @@ async function initMap(latitude, longitude) {
 async function fetchObjects() {
     try {
         const response = await axios.get(
-            'https://lc1453.brighton.domains/skipapp/includes/api.php'
+            'https://lc1453.brighton.domains/SkipFind/includes/api.php'
         );
         return response.data;
     } catch (error) {
@@ -84,9 +84,12 @@ async function fetchObjects() {
 }
 
 function addItemMarkers(items, map) {
+    let customMarker = L.icon({
+        iconUrl: 'assets/icons/marker-icon.svg',
+    });
     for (var item of items) {
         if (item.latitude && item.longitude) {
-            L.marker([item.latitude, item.longitude])
+            L.marker([item.latitude, item.longitude], {icon: customMarker})
                 .addTo(map)
                 .bindPopup(`${item.name}<br>${item.description}`, {
                     className: 'marker-popup',
