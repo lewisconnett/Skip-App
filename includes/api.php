@@ -62,9 +62,10 @@ function addItem($pdo)
     $latitude = htmlspecialchars($_POST['ilatitude']);
     $longitude = htmlspecialchars($_POST['ilongitude']);
     $image = $_FILES['iimage']['name'];
+    $uniqueFilename = uniqid() . "_" . $image;
 
     $target_dir = '../uploads/';
-    $target_file = $target_dir . basename($image);
+    $target_file = $target_dir . basename($uniqueFilename);
 
     if (move_uploaded_file($_FILES['iimage']['tmp_name'], $target_file)) {
         echo json_encode([
@@ -79,13 +80,14 @@ function addItem($pdo)
     }
 
     // Insert record into database
-    $sql = "INSERT INTO objects (name, description, latitude, longitude, imagename) VALUES (:name, :description, :latitude, :longitude, :imagename)";
+    $sql = "INSERT INTO objects (name, description, latitude, longitude, stored_filename, original_filename) VALUES (:name, :description, :latitude, :longitude, :stored_filename, :original_filename)";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':name', $name);
     $stmt->bindParam(':description', $description);
     $stmt->bindParam(':latitude', $latitude);
     $stmt->bindParam(':longitude', $longitude);
-    $stmt->bindParam(':imagename', $image);
+    $stmt->bindParam(':stored_filename', $uniqueFilename);
+    $stmt->bindParam(':original_filename', $image);
 
     if ($stmt->execute()) {
         echo json_encode([
