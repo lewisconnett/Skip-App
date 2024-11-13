@@ -3,8 +3,7 @@ const API_URL = 'https://lc1453.brighton.domains/SkipFind/includes/api.php';
 async function submitFormData(formData) {
     try {
         const response = await axios.post(API_URL, formData);
-
-        console.log(response.data);
+        return response.data.status;
     } catch (error) {
         console.error('Error sending form data: ', error);
     }
@@ -34,12 +33,16 @@ window.addEventListener('load', () => {
         formData.append('ilongitude', locationCoordinates.longitude);
 
         try {
-            submitFormData(formData);
-            alert("Your item has been listed");
+            const response = await submitFormData(formData);
+            if (response == 'error') {
+                alert("Your item wasn't listed!");
+            } else {
+                alert("Your item was listed!");
+            }
             form.reset();
             location.reload();
         } catch (error) {
-            alert("Something went wrong! Try again!");
+            alert('Something went wrong! Try again!');
             form.reset();
         }
     });
