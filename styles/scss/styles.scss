@@ -23,6 +23,17 @@ main {
         display: flex;
         align-items: center;
         justify-content: center;
+
+        .marker-popup {
+
+            img {
+                width: 80%; 
+                max-width: 800px; 
+                height: auto; 
+                display: block; 
+                margin: 0 auto;
+            }
+        }
     }
 
     .overlay-buttons {
@@ -98,7 +109,7 @@ main {
 
 form {
     z-index: 2;
-    position: fixed; 
+    position: fixed;
     display: none;
     top: 50%;
     left: 50%;

@@ -18,6 +18,13 @@ main #map {
   align-items: center;
   justify-content: center;
 }
+main #map .marker-popup img {
+  width: 80%;
+  max-width: 800px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
 main .overlay-buttons {
   display: flex;
   align-items: center;
