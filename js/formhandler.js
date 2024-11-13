@@ -37,6 +37,7 @@ window.addEventListener('load', () => {
             submitFormData(formData);
             alert("Your item has been listed");
             form.reset();
+            location.reload();
         } catch (error) {
             alert("Something went wrong! Try again!");
             form.reset();
