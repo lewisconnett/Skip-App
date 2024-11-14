@@ -15,23 +15,21 @@ function fetchItems($pdo)
 
         http_response_code(200);
 
-        $data = [
+        echo json_encode([
             'status' => 'success',
             'message' => 'Items fetched successfully',
             'data' => $result
-        ];
+        ]);
 
-        echo json_encode($data);
     } else {
 
         http_response_code(500);
 
-        $data = [
+        echo json_encode([
             'status' => 'error',
             'message' => 'Error fetching items'
-        ];
+        ]);
 
-        echo json_encode($data);
     }
 }
 
@@ -116,8 +114,33 @@ function addItem($pdo)
         ]);
         http_response_code(400);
     }
+}
 
-    
+function updateItemStatus($pdo)
+{
+
+    $data = json_decode(file_get_contents("php://input"), true);
+    $itemId = $data['item_id'] ?? $_GET['item_id'] ?? null;
+
+    if ($itemId) {
+        $sql = 'UPDATE objects SET status = "taken" WHERE id = :name';
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':name', $itemId);
+
+        if ($stmt->execute()) {
+            http_response_code(200);
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Record updated successfully'
+            ]);
+        } else {
+            http_response_code(400);
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Record update failed'
+            ]);
+        }
+    }
 }
 
 // Route the request based on the HTTP method
@@ -127,6 +150,9 @@ switch ($method) {
         break;
     case "POST":
         addItem($pdo);
+        break;
+    case "PUT":
+        updateItemStatus($pdo);
         break;
     default:
         echo json_encode([
