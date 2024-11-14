@@ -94,7 +94,7 @@ function addItemMarkers(items, map) {
   <div class="card-body">
     <h5 class="card-title">${item.name}</h5>
     <p class="card-text">${item.description}</p>
-    <a href="#" class="btn btn-primary text-white">View Item</a>
+    <a href="#" class="btn btn-primary text-white">Claim Item</a>
   </div>
 </div>`;
             L.marker([item.latitude, item.longitude], { icon: customMarker })

@@ -17,15 +17,15 @@
 </head>
 
 <body class="d-flex flex-column vh-100 bg-primary">
-    <nav class="navbar bg-body-tertiary shadow sticky-top">
+    <nav class="navbar bg-body-tertiary sticky-top">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <img src="https://placehold.co/50x50" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
                 SkipFind
             </a>
             <div class="d-flex">
-                <a class="nav-link text-dark ms-3 nav-underline" href="#add-item-form">Add Item</a> <!-- Link for Add Item -->
-                <a class="nav-link text-dark ms-3" href="#info-section">Info</a> <!-- Link for Info -->
+                <button class="btn ms-3" id="show-form">Add Item</button> 
+                <button class="btn ms-3">Info</button> 
             </div>
         </div>
     </nav>
@@ -35,14 +35,6 @@
                 <span class="visually-hidden">Map loading...</span>
             </div>
         </div>
-        </div>
-        <button type="button" id="add-item-icon" class="btn btn-primary position-absolute bottom-0 start-50 translate-middle-x z-1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
-                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0" />
-            </svg>
-        </button>
-
-
     </main>
     <form class="container d-flex flex-column justify-content-center bg-white d-none p-5 rounded position-absolute top-50 start-50 translate-middle" method="post">
         <h2>List an Item for Collection</h2>
@@ -60,6 +52,7 @@
         </div>
         <button type="submit" class="btn btn-primary mb-3 mx-auto">List Item</button>
     </form>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
