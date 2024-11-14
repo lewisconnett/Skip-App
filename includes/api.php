@@ -20,7 +20,6 @@ function fetchItems($pdo)
             'message' => 'Items fetched successfully',
             'data' => $result
         ]);
-
     } else {
 
         http_response_code(500);
@@ -29,32 +28,20 @@ function fetchItems($pdo)
             'status' => 'error',
             'message' => 'Error fetching items'
         ]);
-
     }
 }
 
 function addItem($pdo)
 {
-
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        http_response_code(405);
-        echo json_encode([
-            'status' => 'error',
-            'message' => 'Method Not Allowed'
-        ]);
-        return;
-    }
-
-    // Check for required fields
     if (!isset($_POST['iname']) || !isset($_POST['idescription']) || !isset($_POST['ilatitude']) || !isset($_POST['ilongitude']) || !isset($_FILES['iimage'])) {
         http_response_code(400);
         echo json_encode([
             'status' => 'error',
+            'error_code' => 'bad_request',
             'message' => 'Missing required fields'
         ]);
         return;
     }
-
 
     $isDataValid = true;
     $isImageValid = true;
@@ -118,28 +105,44 @@ function addItem($pdo)
 
 function updateItemStatus($pdo)
 {
-
     $data = json_decode(file_get_contents("php://input"), true);
     $itemId = $data['item_id'] ?? $_GET['item_id'] ?? null;
 
     if ($itemId) {
         $sql = 'UPDATE objects SET status = "taken" WHERE id = :name';
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':name', $itemId);
+        $stmt->bindParam(':name', $itemId, PDO::PARAM_INT);
 
         if ($stmt->execute()) {
-            http_response_code(200);
-            echo json_encode([
-                'status' => 'success',
-                'message' => 'Record updated successfully'
-            ]);
+            if ($stmt->rowCount() > 0) {
+                http_response_code(200);
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Record updated successfully'
+                ]);
+            } else {
+                http_response_code(404);
+                echo json_encode([
+                    'status' => 'error',
+                    'error_code' => 'not_found',
+                    'message' => 'No record was updated'
+                ]);
+            }
         } else {
-            http_response_code(400);
+            http_response_code(500);
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Record update failed'
+                'error_code' => 'internal_server_error',
+                'message' => 'An error occured while updating the item'
             ]);
         }
+    } else {
+        http_response_code(400);
+        echo json_encode([
+            'status' => 'error',
+            'error_code' => 'bad_request',
+            'message' => 'item_Id is required'
+        ]);
     }
 }
 
