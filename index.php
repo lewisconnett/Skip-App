@@ -11,51 +11,56 @@
     <script src="js/map.js" defer></script>
     <script type="module" src="js/formhandler.js" defer></script>
     <script src="js/view.js" defer></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="icon" href="assets/favicon/favicon.ico" type="image/x-icon">
     <title>SkipFind</title>
 </head>
 
-<body>
-    <main>
-        <div id="map">Map loading...</div>
-        <div class="top-overlay-content">
-            <div id="location-tag-container">
-                <svg id="location-ping-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" class="size-6" width="20" width="20">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                </svg>
-                <h2 id="location-tag">Fetching location...</h2>
+<body class="d-flex flex-column vh-100 bg-primary">
+    <nav class="navbar bg-body-tertiary shadow sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://placehold.co/50x50" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+                SkipFind
+            </a>
+            <div class="d-flex">
+                <a class="nav-link text-dark ms-3 nav-underline" href="#add-item-form">Add Item</a> <!-- Link for Add Item -->
+                <a class="nav-link text-dark ms-3" href="#info-section">Info</a> <!-- Link for Info -->
             </div>
-            <button id="settings-icon" class="overlay-buttons">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" class="size-6" width="24" height="24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                </svg>
-            </button>
-
         </div>
-        <div class="bottom-overlay-content">
-            <button id="add-item-icon" class="overlay-buttons">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" class="size-6" width="24" height="24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-            </button>
-
+    </nav>
+    <main class="flex-grow-1">
+        <div class="h-100 z-0" id="map">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Map loading...</span>
+            </div>
         </div>
+        </div>
+        <button type="button" id="add-item-icon" class="btn btn-primary position-absolute bottom-0 start-50 translate-middle-x z-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0" />
+            </svg>
+        </button>
+
+
     </main>
-
-
-
-    <form id="addItemForm" method="post">
-        <h2>Add an Item for Collection</h2>
-        <label for="iname">Item Name:</label>
-        <input type="text" id="iname" name="iname" placeholder="Enter item name" required>
-        <label for="idescription">Description:</label>
-        <input type="text" id="idescription" name="idescription" placeholder="Enter description" required>
-        <label for="iimage" accepts="image/png, image/jpg, image/jpeg">Upload an Image: </label>
-        <input type="file" id="iimage" name="iimage" required></input>
-        <button type="submit">Submit Item</button>
+    <form class="container d-flex flex-column justify-content-center bg-white d-none p-5 rounded position-absolute top-50 start-50 translate-middle" method="post">
+        <h2>List an Item for Collection</h2>
+        <div class="mb-3">
+            <label class="form-label" for="iname">Item Name:</label>
+            <input class="form-control" type="text" id="iname" name="iname" placeholder="Enter item name" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="idescription">Description:</label>
+            <textarea class="form-control" type="text" id="idescription" name="idescription" placeholder="Enter description" rows="3" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="iimage" class="form-label" accepts="image/png, image/jpg, image/jpeg">Upload an Image: </label>
+            <input class="form-control" type="file" id="iimage" name="iimage" required></input>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3 mx-auto">List Item</button>
     </form>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
 </html>

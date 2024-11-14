@@ -10,7 +10,7 @@ async function submitFormData(formData) {
 }
 
 window.addEventListener('load', () => {
-    const form = document.querySelector('#addItemForm');
+    const form = document.querySelector('form');
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();

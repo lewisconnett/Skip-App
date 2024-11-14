@@ -89,7 +89,14 @@ function addItemMarkers(items, map) {
     });
     for (var item of items) {
         if (item.latitude && item.longitude) {
-            let popupContent = `<img src="uploads/${item.stored_filename}"/><h1>${item.name}</h1><p>${item.description}</p>`;
+            let popupContent = `<div class="card" style="width: 18rem;">
+  <img src="uploads/${item.stored_filename}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">${item.name}</h5>
+    <p class="card-text">${item.description}</p>
+    <a href="#" class="btn btn-primary text-white">View Item</a>
+  </div>
+</div>`;
             L.marker([item.latitude, item.longitude], { icon: customMarker })
                 .addTo(map)
                 .bindPopup(popupContent, {

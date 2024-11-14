@@ -1,7 +1,7 @@
 <svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
   stroke-width="1.5" stroke="white" aria-hidden="true" data-slot="icon" class="size-6" width="45" height="45">
   <path stroke-linecap="round" stroke-linejoin="round"
-    d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" stroke="white" fill="#85c1ff"
+    d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" stroke="white" fill="#0d6efd"
     stroke-width="1.5px"></path>
   <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" stroke="white"
     fill="none" stroke-width="1.5px"></path>

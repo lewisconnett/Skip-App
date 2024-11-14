@@ -6,67 +6,38 @@ body {
   position: relative;
 }
 
-main {
-  height: 100dvh;
-  position: relative;
-}
 main #map {
-  z-index: 0;
-  height: 100%;
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-main #map .marker-popup img {
-  width: 80%;
-  max-width: 800px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-main .overlay-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 0.25rem;
-  padding: 0.5rem;
-  background-color: white;
-  cursor: pointer;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-}
-main .top-overlay-content {
-  z-index: 1;
-  position: absolute;
-  top: 0;
-  background-color: transparent;
-  max-width: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 4rem;
-}
-main .top-overlay-content #settings-icon {
-  margin-right: 2rem;
-}
-main .top-overlay-content #location-tag-container {
-  background-color: white;
-  border-radius: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  display: flex;
-  align-items: center;
-  margin-left: 2rem;
-}
-main .top-overlay-content #location-tag-container #location-tag {
+main #map .marker-popup .leaflet-popup-content {
+  padding: 0 !important;
   margin: 0;
-  font-weight: 400;
-  font-size: 1rem;
-  margin-left: 0.25rem;
 }
-main .bottom-overlay-content {
+main #map .marker-popup .leaflet-popup-content-wrapper {
+  padding: 0 !important;
+  border-radius: 0;
+  overflow: hidden;
+  border-radius: 8px;
+}
+main #map .marker-popup .leaflet-popup-close-button {
+  top: 5px;
+  right: 5px;
+  color: white;
+  transition: background-color 0.3s, transform 0.2s;
+}
+main #map .marker-popup .leaflet-popup-close-button:hover {
+  transform: scale(1.1);
+}
+main #map .marker-popup img.card-img-top {
+  max-height: 200px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.bottom-overlay-content {
   position: absolute;
   bottom: 0;
   display: flex;
@@ -76,7 +47,7 @@ main .bottom-overlay-content {
   margin-bottom: 2rem;
   align-items: center;
 }
-main .bottom-overlay-content #add-item-icon {
+.bottom-overlay-content #add-item-icon {
   margin-right: 2rem;
 }
 
@@ -87,63 +58,6 @@ main .bottom-overlay-content #add-item-icon {
   width: 100%;
   max-width: 800px;
   margin-top: 2rem;
-}
-
-form {
-  z-index: 2;
-  position: fixed;
-  display: none;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  max-width: 400px;
-  padding: 20px;
-  background-color: #ffffff;
-  border: 1px dashed #ff6600;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  text-align: left;
-}
-form h2 {
-  font-size: 1.25rem;
-  margin-bottom: 15px;
-  text-align: center;
-  color: #ff6600;
-}
-form label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: normal;
-  color: #666;
-}
-form input[type=text] {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
-  color: #333;
-}
-form input[type=text]:focus {
-  border-color: #ff6600;
-  outline: none;
-  box-shadow: 0 0 4px rgba(255, 102, 0, 0.2);
-}
-form button {
-  width: 100%;
-  padding: 10px;
-  background-color: #ff6600;
-  color: #fff;
-  font-weight: bold;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-form button:hover {
-  background-color: #cc5200;
 }
 
 /*# sourceMappingURL=styles.css.map */
