@@ -89,12 +89,20 @@ function addItemMarkers(items, map) {
     });
     for (var item of items) {
         if (item.latitude && item.longitude) {
+            let buttonText = 'Claim Item';
+            let isDisabled = false;
+
+            if (item.status === 'taken') {
+                buttonText = 'Item Claimed';
+                isDisabled = true;
+            }
+
             let popupContent = `<div class="card" style="width: 18rem;">
   <img src="uploads/${item.stored_filename}" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">${item.name}</h5>
     <p class="card-text">${item.description}</p>
-    <a href="#" class="btn btn-primary text-white">Claim Item</a>
+    <button data-item-id="${item.id}" class="btn btn-primary text-white claim-item-btn" ${isDisabled ? 'disabled' : ''}>${buttonText}</button>
   </div>
 </div>`;
             L.marker([item.latitude, item.longitude], { icon: customMarker })
@@ -105,6 +113,27 @@ function addItemMarkers(items, map) {
         }
     }
 }
+
+document.addEventListener('click', async function (event) {
+    if (event.target && event.target.classList.contains('claim-item-btn')) {
+        event.preventDefault();
+
+        const itemId = event.target.getAttribute('data-item-id');
+
+        if (itemId) {
+            try {
+                const response = await axios.put(
+                    `https://lc1453.brighton.domains/SkipFind/includes/api.php?item_id=${itemId}`
+                );
+                console.log(response.data);
+                event.target.setAttribute('disabled', 'true');
+                event.target.innerText = 'Item Claimed';
+            } catch (error) {
+                console.error('Error updating item availability', error);
+            }
+        }
+    }
+});
 
 async function getLocationName(latitude, longitude) {
     if (!latitude || !longitude) {

@@ -16,7 +16,7 @@
     <title>SkipFind</title>
 </head>
 
-<body class="d-flex flex-column vh-100 bg-primary">
+<body class="d-flex flex-column vh-100">
     <nav class="navbar bg-body-tertiary sticky-top">
         <div class="container">
             <a class="navbar-brand" href="#">
@@ -24,14 +24,14 @@
                 SkipFind
             </a>
             <div class="d-flex">
-                <button class="btn ms-3" id="show-form">Add Item</button> 
-                <button class="btn ms-3">Info</button> 
+                <button class="btn ms-3" id="show-form">Add Item</button>
+                <button class="btn ms-3">Info</button>
             </div>
         </div>
     </nav>
     <main class="flex-grow-1">
         <div class="h-100 z-0" id="map">
-            <div class="spinner-border" role="status">
+            <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Map loading...</span>
             </div>
         </div>
