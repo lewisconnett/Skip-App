@@ -93,8 +93,7 @@ function addItemMarkers(items, map) {
             let isDisabled = false;
 
             if (item.status === 'taken') {
-                buttonText = 'Item Claimed';
-                isDisabled = true;
+                continue;
             }
 
             let popupContent = `<div class="card" style="width: 18rem;">
