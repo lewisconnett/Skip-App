@@ -20,7 +20,6 @@
     <nav class="navbar bg-body-tertiary sticky-top">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="https://placehold.co/50x50" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
                 SkipFind
             </a>
             <div class="d-flex">

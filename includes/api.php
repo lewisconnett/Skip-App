@@ -146,6 +146,36 @@ function updateItemStatus($pdo)
     }
 }
 
+function removeTakenItems($pdo)
+{
+    $sql = 'DELETE FROM objects WHERE status = "taken"';
+    $stmt = $pdo->prepare($sql);
+
+    if ($stmt->execute()) {
+        if ($stmt->rowCount() > 0) {
+            http_response_code(200);
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Removed items',
+                'deleted_count' => $stmt->rowCount()
+            ]);
+        } else {
+            http_response_code(204);
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'No rows were deleted'
+            ]);
+        }
+    } else {
+        http_response_code(500);
+        echo json_encode([
+            'status' => 'error',
+            'error_code' => 'internal_server_error',
+            'message' => 'An error occured while removing items'
+        ]);
+    }   
+}
+
 // Route the request based on the HTTP method
 switch ($method) {
     case "GET":
@@ -156,6 +186,9 @@ switch ($method) {
         break;
     case "PUT":
         updateItemStatus($pdo);
+        break;
+    case "DELETE":
+        removeTakenItems($pdo);
         break;
     default:
         echo json_encode([
