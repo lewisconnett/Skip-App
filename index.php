@@ -22,7 +22,7 @@
             <a class="navbar-brand" href="#">
                 SkipFind
             </a>
-            <div class="d-flex">
+            <div class="d-flex"> 
                 <button class="btn ms-3" id="show-form">Add Item</button>
                 <button class="btn ms-3">Info</button>
             </div>
@@ -50,7 +50,7 @@
             <input class="form-control" type="file" id="iimage" name="iimage" required></input>
         </div>
         <button type="submit" class="btn btn-primary mx-auto mb-3" type="button">
-            <span class="spinner-border spinner-border-sm visually-hidden" id="loader" aria-hidden="true"></span>
+            <span class="spinner-border spinner-border-sm visually-hidden" id="spinner" aria-hidden="true"></span>
             <span id="button-text" role="status">List Item</span>
         </button>
     </form>

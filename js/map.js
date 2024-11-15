@@ -116,9 +116,7 @@ function addItemMarkers(items, map) {
 document.addEventListener('click', async function (event) {
     if (event.target && event.target.classList.contains('claim-item-btn')) {
         event.preventDefault();
-
         const itemId = event.target.getAttribute('data-item-id');
-
         if (itemId) {
             try {
                 const response = await axios.put(
@@ -127,6 +125,7 @@ document.addEventListener('click', async function (event) {
                 console.log(response.data);
                 event.target.setAttribute('disabled', 'true');
                 event.target.innerText = 'Item Claimed';
+                location.reload();
             } catch (error) {
                 console.error('Error updating item availability', error);
             }

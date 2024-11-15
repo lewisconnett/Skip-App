@@ -62,6 +62,10 @@ window.addEventListener('load', () => {
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
+        const button = event.target.querySelector('[type="submit"]');
+
+        toggleButtonState(button, true, "Listing Item");
+
         const formData = new FormData(form);
 
         let locationCoordinates;
@@ -89,6 +93,7 @@ window.addEventListener('load', () => {
                 } else {
                     alert('Your item was listed!');
                 }
+                toggleButtonState(button, false, 'List Item');
                 form.reset();
                 location.reload();
             } catch (error) {
