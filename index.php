@@ -50,7 +50,10 @@
             <label for="iimage" class="form-label" accepts="image/png, image/jpg, image/jpeg">Upload an Image: </label>
             <input class="form-control" type="file" id="iimage" name="iimage" required></input>
         </div>
-        <button type="submit" class="btn btn-primary mb-3 mx-auto">List Item</button>
+        <button type="submit" class="btn btn-primary mx-auto mb-3" type="button">
+            <span class="spinner-border spinner-border-sm visually-hidden" id="loader" aria-hidden="true"></span>
+            <span id="button-text" role="status">List Item</span>
+        </button>
     </form>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
