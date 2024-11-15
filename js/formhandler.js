@@ -10,8 +10,8 @@ async function submitFormData(formData) {
 }
 
 function validateFormData(form) {
-    const name = form.get('iname') || '';
-    const description = form.get('idescription') || '';
+    const name = form.get('iname').trim() || '';
+    const description = form.get('idescription').trim() || '';
     const image = form.get('iimage');
 
     return validateTextFields(name, description) && validateImage(image);
@@ -78,6 +78,8 @@ window.addEventListener('load', () => {
 
         formData.append('ilatitude', locationCoordinates.latitude);
         formData.append('ilongitude', locationCoordinates.longitude);
+
+        validateFormData(formData);
 
         if (validateFormData(formData)) {
             try {
