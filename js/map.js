@@ -1,6 +1,8 @@
 const DEFAULT_LATITUDE = 50.8262;
 const DEFAULT_LONGITUDE = -0.1356;
 
+let map;
+
 async function getUsersLocation() {
     if (navigator.geolocation) {
         return new Promise((resolve, reject) => {
@@ -44,31 +46,52 @@ function handleGeolocationErrors(error) {
 }
 
 async function initMap(latitude, longitude) {
-    try {
-        const map = L.map('map', {
-            zoomControl: false,
-        }).setView([latitude, longitude], 15);
 
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution:
-                '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        }).addTo(map);
-        try {
-            const availableItems = await fetchObjects();
-            addItemMarkers(availableItems.data, map);
-        } catch (error) {
-            console.error(
-                'There was an error adding the item markers to the map: ',
-                error
-            );
-        }
+    map = L.map('map', {
+        zoomControl: false,
+    }).setView([latitude, longitude], 15);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution:
+            '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(map);
+
+    try {
+        const availableItems = await fetchObjects();
+        availableItems.data.forEach(item => {
+            console.log(item);
+            addMarkerToMap(item);
+        });
+        console.log(availableItems.data);
+        
     } catch (error) {
         console.error(
-            'An error occured when trying to initialise the map: ',
+            'There was an error adding the item markers to the map: ',
             error
         );
     }
+}
+
+function addMarkerToMap(item) {
+    let customMarker = L.icon({
+        iconUrl: 'assets/icons/marker-icon.svg',
+    });
+
+    const popupContent = `
+        <div class="card" style="width: 18rem;">
+            <img src="uploads/${item.stored_filename}" class="card-img-top" alt="${item.name}">
+            <div class="card-body">
+                <h5 class="card-title">${item.name}</h5>
+                <p class="card-text">${item.description}</p>
+                <button data-item-id="${item.id}" class="btn btn-primary text-white claim-item-btn">Claim Item</button>
+            </div>
+        </div>
+    `;
+
+    L.marker([item.latitude, item.longitude], { icon: customMarker })
+        .addTo(map)
+        .bindPopup(popupContent, { className: 'marker-popup' });
 }
 
 async function fetchObjects() {
@@ -80,36 +103,6 @@ async function fetchObjects() {
     } catch (error) {
         console.error('Error fetching objects: ', error);
         return [];
-    }
-}
-
-function addItemMarkers(items, map) {
-    let customMarker = L.icon({
-        iconUrl: 'assets/icons/marker-icon.svg',
-    });
-    for (var item of items) {
-        if (item.latitude && item.longitude) {
-            let buttonText = 'Claim Item';
-            let isDisabled = false;
-
-            if (item.status === 'taken') {
-                continue;
-            }
-
-            let popupContent = `<div class="card" style="width: 18rem;">
-  <img src="uploads/${item.stored_filename}" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">${item.name}</h5>
-    <p class="card-text">${item.description}</p>
-    <button data-item-id="${item.id}" class="btn btn-primary text-white claim-item-btn" ${isDisabled ? 'disabled' : ''}>${buttonText}</button>
-  </div>
-</div>`;
-            L.marker([item.latitude, item.longitude], { icon: customMarker })
-                .addTo(map)
-                .bindPopup(popupContent, {
-                    className: 'marker-popup',
-                });
-        }
     }
 }
 
@@ -132,34 +125,6 @@ document.addEventListener('click', async function (event) {
         }
     }
 });
-
-async function getLocationName(latitude, longitude) {
-    if (!latitude || !longitude) {
-        console.error(
-            'Longitude and latitude coordinates are empty or invalid'
-        );
-        return null;
-    }
-
-    try {
-        const response = await axios.get(
-            `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
-        );
-        const data = response.data;
-
-        if (data && data.address) {
-            const address = data.address;
-            const locationName = address.suburb || 'Location not found';
-            return locationName;
-        } else {
-            console.error('Location not found in the response');
-            return null;
-        }
-    } catch (error) {
-        console.error('Error fetching location:', error);
-        return null;
-    }
-}
 
 async function start() {
     try {

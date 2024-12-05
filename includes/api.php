@@ -60,17 +60,19 @@ function addItem($pdo)
         $isImageValid = false;
     }
 
+    $response = [];
+
     if ($isImageValid && $isDataValid) {
         if (move_uploaded_file($_FILES['iimage']['tmp_name'], $target_file)) {
-            echo json_encode([
+            $response['image_upload'] = [
                 'status' => 'success',
                 'message' => 'Image was uploaded'
-            ]);
+            ];
         } else {
-            echo json_encode([
+            $response['image_upload'] = [
                 'status' => 'error',
                 'message' => 'Image failed to upload'
-            ]);
+            ];
         }
         $sql = "INSERT INTO objects (name, description, latitude, longitude, stored_filename, original_filename) VALUES (:name, :description, :latitude, :longitude, :stored_filename, :original_filename)";
         $stmt = $pdo->prepare($sql);
@@ -83,17 +85,31 @@ function addItem($pdo)
 
         if ($stmt->execute()) {
             http_response_code(201);
-            echo json_encode([
+
+            $newItem = [
+                'id' => $pdo->lastInsertId(),
+                'name' => $name,
+                'description' => $description,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+                'stored_filename' => $uniqueFilename
+            ];
+
+            $response['record_insertion'] = [
                 "status" => "success",
-                "message" => "Record inserted"
-            ]);
+                "message" => "Record inserted",
+                "data" => $newItem
+            ];
         } else {
             http_response_code(500);
-            echo json_encode([
+            $response['record_insertion'] = [
                 "status" => "error",
-                "error" => "Error inserting record: " . $stmt->errorInfo()[2]
-            ]);
+                "message" => "Error inserting record: " . $stmt->errorInfo()[2]
+            ];
         }
+
+        http_response_code(201);
+        echo json_encode($response);
     } else {
         echo json_encode([
             'status' => 'error',
@@ -173,7 +189,7 @@ function removeTakenItems($pdo)
             'error_code' => 'internal_server_error',
             'message' => 'An error occured while removing items'
         ]);
-    }   
+    }
 }
 
 // Route the request based on the HTTP method

@@ -64,21 +64,11 @@ window.addEventListener('load', () => {
 
         const button = event.target.querySelector('[type="submit"]');
 
-        toggleButtonState(button, true, "Listing Item");
+        toggleButtonState(button, true, 'Listing Item');
 
         const formData = new FormData(form);
 
-        let locationCoordinates;
-        try {
-            locationCoordinates = await getUsersLocation();
-        } catch (error) {
-            console.error("Error gathering user's location: ", error);
-            alert('There was a problem retrieving your location.');
-            locationCoordinates = {
-                latitude: DEFAULT_LATITUDE,
-                longitude: DEFAULT_LONGITUDE,
-            };
-        }
+        let locationCoordinates = await getUsersLocation();
 
         formData.append('ilatitude', locationCoordinates.latitude);
         formData.append('ilongitude', locationCoordinates.longitude);
@@ -87,19 +77,27 @@ window.addEventListener('load', () => {
 
         if (validateFormData(formData)) {
             try {
-                const response = await submitFormData(formData);
-                if (response == 'error') {
-                    alert("Your item wasn't listed!");
+                const response = await axios.post(API_URL, formData);
+                if (
+                    response.data.record_insertion &&
+                    response.data.record_insertion.status === 'success'
+                ) {
+                    const newItem = response.data.record_insertion.data;
+                    addMarkerToMap(newItem);
+                    alert('Item added successfully!');
                 } else {
-                    alert('Your item was listed!');
+                    console.error('Error adding item:', response.data);
+                    alert('Failed to add item!');
                 }
-                toggleButtonState(button, false, 'List Item');
-                form.reset();
-                location.reload();
             } catch (error) {
-                alert('Something went wrong! Try again!');
-                form.reset();
+                console.error(
+                    'Error adding item:',
+                    error.response?.data || error.message
+                );
+                alert('Something went wrong. Please try again.');
             }
+
+
         } else {
             console.log('Form is invalid, try again!');
             form.reset();
