@@ -82,8 +82,10 @@ window.addEventListener('load', () => {
                     response.data.record_insertion &&
                     response.data.record_insertion.status === 'success'
                 ) {
+                    toggleButtonState(button, false, 'Item Listed');
                     const newItem = response.data.record_insertion.data;
                     addMarkerToMap(newItem);
+                    form.reset();
                     alert('Item added successfully!');
                 } else {
                     console.error('Error adding item:', response.data);

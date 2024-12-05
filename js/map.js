@@ -60,10 +60,8 @@ async function initMap(latitude, longitude) {
     try {
         const availableItems = await fetchObjects();
         availableItems.data.forEach(item => {
-            console.log(item);
             addMarkerToMap(item);
         });
-        console.log(availableItems.data);
         
     } catch (error) {
         console.error(
@@ -76,6 +74,8 @@ async function initMap(latitude, longitude) {
 function addMarkerToMap(item) {
     let customMarker = L.icon({
         iconUrl: 'assets/icons/marker-icon.svg',
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
     });
 
     const popupContent = `
