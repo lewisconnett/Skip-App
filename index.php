@@ -34,8 +34,8 @@
             </div>
         </div>
     </main>
-    <form class="container d-flex flex-column justify-content-center bg-white d-none p-5 rounded position-absolute top-50 start-50 translate-middle" method="post">
-        <h2>List an Item for Collection</h2>
+    <form style="max-width: 700px;" class="shadow container d-flex flex-column justify-content-center bg-white d-none p-5 rounded position-absolute top-50 start-50 translate-middle mw-700" method="post">
+        <h2 class="mb-4">List an Item for Collection</h2>
         <div class="mb-3">
             <label class="form-label" for="iname">Item Name:</label>
             <input class="form-control" type="text" id="iname" name="iname" placeholder="Enter item name" required>

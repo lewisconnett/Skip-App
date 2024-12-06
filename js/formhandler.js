@@ -56,54 +56,66 @@ function validateImage(image) {
     return true;
 }
 
+let cachedLocation = null;
+
+async function getCachedLocation() {
+    if (!cachedLocation) {
+        cachedLocation = await getUsersLocation();
+    }
+    return cachedLocation;
+}
+
 window.addEventListener('load', () => {
     const form = document.querySelector('form');
+
+    let isSubmitting = false;
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
-        const button = event.target.querySelector('[type="submit"]');
+        if (isSubmitting) return;
 
+        isSubmitting = true;
+        const button = event.target.querySelector('[type="submit"]');
         toggleButtonState(button, true, 'Listing Item');
 
-        const formData = new FormData(form);
+        try {
+            const formData = new FormData(form);
 
-        let locationCoordinates = await getUsersLocation();
+            let locationCoordinates = await getCachedLocation();
+            formData.append('ilatitude', locationCoordinates.latitude);
+            formData.append('ilongitude', locationCoordinates.longitude);
 
-        formData.append('ilatitude', locationCoordinates.latitude);
-        formData.append('ilongitude', locationCoordinates.longitude);
-
-        validateFormData(formData);
-
-        if (validateFormData(formData)) {
-            try {
-                const response = await axios.post(API_URL, formData);
-                if (
-                    response.data.record_insertion &&
-                    response.data.record_insertion.status === 'success'
-                ) {
-                    toggleButtonState(button, false, 'Item Listed');
-                    const newItem = response.data.record_insertion.data;
-                    addMarkerToMap(newItem);
-                    form.reset();
-                    form.classList.add("d-none");
-                    showToast("Your Item was Added!");
-                } else {
-                    console.error('Error adding item:', response.data);
-                    alert('Failed to add item!');
+            if (validateFormData(formData)) {
+                try {
+                    const response = await axios.post(API_URL, formData);
+                    if (
+                        response.data.record_insertion &&
+                        response.data.record_insertion.status === 'success'
+                    ) {
+                        toggleButtonState(button, false, 'Item Listed');
+                        const newItem = response.data.record_insertion.data;
+                        addMarkerToMap(newItem);
+                        form.reset();
+                        form.classList.add('d-none');
+                        showToast('Your Item was Added!');
+                    } else {
+                        console.error('Error adding item:', response.data);
+                        alert('Failed to add item!');
+                    }
+                } catch (error) {
+                    console.error(
+                        'Error adding item:',
+                        error.response?.data || error.message
+                    );
+                    alert('Something went wrong. Please try again.');
                 }
-            } catch (error) {
-                console.error(
-                    'Error adding item:',
-                    error.response?.data || error.message
-                );
-                alert('Something went wrong. Please try again.');
+            } else {
+                console.log('Form is invalid, try again!');
+                form.reset();
             }
-
-
-        } else {
-            console.log('Form is invalid, try again!');
-            form.reset();
+        } finally {
+            isSubmitting = false;
         }
     });
 });
