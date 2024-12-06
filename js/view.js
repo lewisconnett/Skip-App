@@ -10,7 +10,17 @@ function toggleButtonState(button, isLoading, buttonText) {
         spinner.classList.add('visually-hidden');
         button.disabled = false;
     }
-    
+}
+
+function showToast(message) {
+    const toastLiveExample = document.querySelector('#liveToast');
+
+    document.querySelector('#toast-body').textContent = message;
+
+    const toastBootstrap =
+        bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+
+    toastBootstrap.show();
 }
 
 window.addEventListener('load', async () => {

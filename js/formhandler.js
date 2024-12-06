@@ -86,7 +86,8 @@ window.addEventListener('load', () => {
                     const newItem = response.data.record_insertion.data;
                     addMarkerToMap(newItem);
                     form.reset();
-                    alert('Item added successfully!');
+                    form.classList.add("d-none");
+                    showToast("Your Item was Added!");
                 } else {
                     console.error('Error adding item:', response.data);
                     alert('Failed to add item!');

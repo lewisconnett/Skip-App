@@ -46,7 +46,6 @@ function handleGeolocationErrors(error) {
 }
 
 async function initMap(latitude, longitude) {
-
     map = L.map('map', {
         zoomControl: false,
     }).setView([latitude, longitude], 15);
@@ -59,10 +58,11 @@ async function initMap(latitude, longitude) {
 
     try {
         const availableItems = await fetchObjects();
-        availableItems.data.forEach(item => {
-            addMarkerToMap(item);
+        availableItems.data.forEach((item) => {
+            if (item.status === 'available') {
+                addMarkerToMap(item);
+            }
         });
-        
     } catch (error) {
         console.error(
             'There was an error adding the item markers to the map: ',
@@ -107,7 +107,8 @@ async function fetchObjects() {
 }
 
 document.addEventListener('click', async function (event) {
-    if (event.target && event.target.classList.contains('claim-item-btn')) {
+    const button = event.target;
+    if (button && button.classList.contains('claim-item-btn')) {
         event.preventDefault();
         const itemId = event.target.getAttribute('data-item-id');
         if (itemId) {
@@ -115,10 +116,18 @@ document.addEventListener('click', async function (event) {
                 const response = await axios.put(
                     `https://lc1453.brighton.domains/SkipFind/includes/api.php?item_id=${itemId}`
                 );
-                console.log(response.data);
-                event.target.setAttribute('disabled', 'true');
-                event.target.innerText = 'Item Claimed';
-                location.reload();
+                if (response.data.status === 'success') {
+                    button.setAttribute('disabled', 'true');
+                    button.classList.add('disabled');
+                    button.innerText = 'Item Claimed';
+                    this.location.reload();
+                } else {
+                    console.error(
+                        'Error: Failed to claim item:',
+                        response.data.message
+                    );
+                    alert('Could not claim the item. Please try again.');
+                }
             } catch (error) {
                 console.error('Error updating item availability', error);
             }

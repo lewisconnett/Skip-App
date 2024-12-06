@@ -22,9 +22,8 @@
             <a class="navbar-brand" href="#">
                 Skip App
             </a>
-            <div class="d-flex"> 
+            <div class="d-flex">
                 <button class="btn ms-3" id="show-form">Add Item</button>
-                <button class="btn ms-3">Info</button>
             </div>
         </div>
     </nav>
@@ -54,6 +53,18 @@
             <span id="button-text" role="status">List Item</span>
         </button>
     </form>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Skip App</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div id="toast-body" class="toast-body" aria-live="polite">
+                Notification will appear here.
+            </div>
+        </div>
+    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
