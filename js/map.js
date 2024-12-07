@@ -58,6 +58,7 @@ async function initMap(latitude, longitude) {
 
     try {
         const availableItems = await fetchObjects();
+        console.log(availableItems.data)
         availableItems.data.forEach((item) => {
             if (item.status === 'available') {
                 addMarkerToMap(item);
@@ -80,7 +81,7 @@ function addMarkerToMap(item) {
 
     const popupContent = `
         <div class="card" style="width: 18rem;">
-            <img src="uploads/${item.stored_filename}" class="card-img-top" alt="${item.name}">
+            <img src="./uploads/${item.image}" class="card-img-top" alt="${item.name}">
             <div class="card-body">
                 <h5 class="card-title">${item.name}</h5>
                 <p class="card-text">${item.description}</p>

@@ -90,11 +90,11 @@ window.addEventListener('load', () => {
                 try {
                     const response = await axios.post(API_URL, formData);
                     if (
-                        response.data.record_insertion &&
-                        response.data.record_insertion.status === 'success'
+                        response.data &&
+                        response.data.status === 'success'
                     ) {
                         toggleButtonState(button, false, 'Item Listed');
-                        const newItem = response.data.record_insertion.data;
+                        const newItem = response.data.data;
                         addMarkerToMap(newItem);
                         form.reset();
                         form.classList.add('d-none');
