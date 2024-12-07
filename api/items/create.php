@@ -35,8 +35,8 @@ if (validateImage($image) && $isDataValid) {
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':description', $description, PDO::PARAM_STR);
-        $stmt->bindParam(':latitude', $latitude, PDO::PARAM_INT);
-        $stmt->bindParam(':longitude', $longitude, PDO::PARAM_INT);
+        $stmt->bindParam(':latitude', $latitude);
+        $stmt->bindParam(':longitude', $longitude);
         $stmt->bindParam(':image', $uniqueFilename);
 
         if ($stmt->execute()) {

@@ -62,6 +62,7 @@ async function getCachedLocation() {
     if (!cachedLocation) {
         cachedLocation = await getUsersLocation();
     }
+    console.log(cachedLocation);
     return cachedLocation;
 }
 

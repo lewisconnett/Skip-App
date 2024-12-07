@@ -12,11 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] !== "GET") {
 $sql = "SELECT * FROM `objects`";
 $stmt = $pdo->prepare($sql);
 
-if ($stmt->execute()) {
+try {
+    $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
     sendResponse(200, 'success', 'Items fetched successfully', $result);
-} else {
-
+} catch (PDOException $e) {
     sendResponse(500, 'error', 'Error fetching items');
 }
