@@ -118,7 +118,7 @@ document.addEventListener('click', async function (event) {
         const itemId = event.target.getAttribute('data-item-id');
         if (itemId) {
             try {
-                const response = await axios.put(
+                const response = await axios.patch(
                     `https://lc1453.brighton.domains/SkipFind/includes/api.php?item_id=${itemId}`
                 );
                 if (response.data.status === 'success') {
