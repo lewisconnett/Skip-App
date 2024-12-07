@@ -101,14 +101,14 @@ window.addEventListener('load', () => {
                         showToast('Your Item was Added!');
                     } else {
                         console.error('Error adding item:', response.data);
-                        alert('Failed to add item!');
+                        showToast('Failed to add item!');
                     }
                 } catch (error) {
                     console.error(
                         'Error adding item:',
                         error.response?.data || error.message
                     );
-                    alert('Something went wrong. Please try again.');
+                    showToast('Something went wrong. Please try again.');
                 }
             } else {
                 console.log('Form is invalid, try again!');

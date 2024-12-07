@@ -2,6 +2,7 @@ const DEFAULT_LATITUDE = 50.8262;
 const DEFAULT_LONGITUDE = -0.1356;
 
 let map;
+const markers = new Map();
 
 async function getUsersLocation() {
     if (navigator.geolocation) {
@@ -58,7 +59,6 @@ async function initMap(latitude, longitude) {
 
     try {
         const availableItems = await fetchObjects();
-        console.log(availableItems.data)
         availableItems.data.forEach((item) => {
             if (item.status === 'available') {
                 addMarkerToMap(item);
@@ -90,9 +90,13 @@ function addMarkerToMap(item) {
         </div>
     `;
 
-    L.marker([item.latitude, item.longitude], { icon: customMarker })
+    const marker = L.marker([item.latitude, item.longitude], {
+        icon: customMarker,
+    })
         .addTo(map)
         .bindPopup(popupContent, { className: 'marker-popup' });
+
+    markers.set(item.id, marker);
 }
 
 async function fetchObjects() {
@@ -121,13 +125,19 @@ document.addEventListener('click', async function (event) {
                     button.setAttribute('disabled', 'true');
                     button.classList.add('disabled');
                     button.innerText = 'Item Claimed';
-                    this.location.reload();
+                    showToast('Item Claimed!');
+
+                    const marker = markers.get(itemId);
+                    if (marker) {
+                        map.removeLayer(marker);
+                        markers.delete(itemId);
+                    }
                 } else {
                     console.error(
                         'Error: Failed to claim item:',
                         response.data.message
                     );
-                    alert('Could not claim the item. Please try again.');
+                    showToast('Could not claim the item. Please try again.');
                 }
             } catch (error) {
                 console.error('Error updating item availability', error);
