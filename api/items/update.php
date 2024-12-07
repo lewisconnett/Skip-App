@@ -4,6 +4,10 @@ header("Content-Type: application/json");
 include '../includes/db.php';
 include '../includes/functions.php';
 
+if ($_SERVER['REQUEST_METHOD'] !== "PATCH") {
+    sendResponse(405, 'error', 'Method Not Allowed');
+}
+
 $data = json_decode(file_get_contents("php://input"), true);
 $itemId = $data['item_id'] ?? null;
 

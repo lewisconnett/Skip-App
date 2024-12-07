@@ -4,6 +4,10 @@ header("Content-Type: application/json");
 include '../includes/db.php';
 include '../includes/functions.php';
 
+if ($_SERVER['REQUEST_METHOD'] !== "POST") {
+    sendResponse(405, 'error', 'Method Not Allowed');
+}
+
 if (!isset($_POST['iname']) || !isset($_POST['idescription']) || !isset($_POST['ilatitude']) || !isset($_POST['ilongitude']) || !isset($_FILES['iimage'])) {
     sendResponse(400, 'error', 'Missing required fields');
     return;

@@ -4,6 +4,10 @@ header("Content-Type: application/json");
 include '../includes/db.php';
 include '../includes/functions.php';
 
+if ($_SERVER['REQUEST_METHOD'] !== "DELETE") {
+    sendResponse(405, 'error', 'Method Not Allowed');
+}
+
 $sql = 'DELETE FROM objects WHERE status = "taken"';
 $stmt = $pdo->prepare($sql);
 
