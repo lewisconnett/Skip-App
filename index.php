@@ -23,7 +23,7 @@
                 Skip App
             </a>
             <div class="d-flex">
-                <button class="btn ms-3" id="show-form">Add Item</button>
+                <button class="btn ms-3 btn-primary " id="show-form">Add Item</button>
             </div>
         </div>
     </nav>
@@ -34,8 +34,11 @@
             </div>
         </div>
     </main>
-    <form style="max-width: 700px;" class="shadow container d-flex flex-column justify-content-center bg-white d-none p-5 rounded position-absolute top-50 start-50 translate-middle mw-700" method="post">
-        <h2 class="mb-4">List an Item for Collection</h2>
+    <form style="max-width: 700px;" class="shadow container d-flex flex-column justify-content-center bg-white d-none p-5 rounded position-absolute top-50 start-50 translate-middle mw-700" method="post" id="item-form">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>List an Item for Collection</h2>
+            <button type="button" class="btn-close" id="close-form" aria-label="Close"></button>
+        </div>
         <div class="mb-3">
             <label class="form-label" for="iname">Item Name:</label>
             <input class="form-control" type="text" id="iname" name="iname" placeholder="Enter item name" required>
@@ -48,7 +51,7 @@
             <label for="iimage" class="form-label" accepts="image/png, image/jpg, image/jpeg">Upload an Image: </label>
             <input class="form-control" type="file" id="iimage" name="iimage" required></input>
         </div>
-        <button type="submit" class="btn btn-primary mx-auto mb-3" type="button">
+        <button type="submit" class="btn btn-primary mx-auto mb-3">
             <span class="spinner-border spinner-border-sm visually-hidden" id="spinner" aria-hidden="true"></span>
             <span id="button-text" role="status">List Item</span>
         </button>

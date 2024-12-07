@@ -26,7 +26,11 @@ function showToast(message) {
 window.addEventListener('load', async () => {
     const addItemForm = document.querySelector('form');
 
-    document.querySelector('#show-form').addEventListener('click', function () {
+    document.querySelector('#show-form').addEventListener('click', () => {
         addItemForm.style.display = addItemForm.classList.toggle('d-none');
+    });
+
+    document.querySelector('#close-form').addEventListener('click', () => {
+        addItemForm.style.display = addItemForm.classList.add('d-none');
     });
 });
