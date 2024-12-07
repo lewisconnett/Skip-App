@@ -102,7 +102,7 @@ function addMarkerToMap(item) {
 async function fetchObjects() {
     try {
         const response = await axios.get(
-            'https://lc1453.brighton.domains/SkipFind/includes/api.php'
+            'https://lc1453.brighton.domains/SkipFind/api/items/fetch.php'
         );
         return response.data;
     } catch (error) {
@@ -119,7 +119,8 @@ document.addEventListener('click', async function (event) {
         if (itemId) {
             try {
                 const response = await axios.patch(
-                    `https://lc1453.brighton.domains/SkipFind/includes/api.php?item_id=${itemId}`
+                    'https://lc1453.brighton.domains/SkipFind/api/items/update.php',
+                    { item_id: itemId }
                 );
                 if (response.data.status === 'success') {
                     button.setAttribute('disabled', 'true');
