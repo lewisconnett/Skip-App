@@ -11,13 +11,14 @@ if ($_SERVER['REQUEST_METHOD'] !== "DELETE") {
 $sql = 'DELETE FROM objects WHERE status = "taken"';
 $stmt = $pdo->prepare($sql);
 
-if ($stmt->execute()) {
+try {
+    $stmt->execute();
     $deletedCount = $stmt->rowCount();
     if ($deletedCount > 0) {
-        sendResponse(200, 'success', 'Removed items successfully', $deletedCount);
+        sendResponse(200, 'success', 'Removed items successfully', ['deleted_count' => $deletedCount]);
     } else {
-        sendResponse(204, 'success', 'No rows deleted');
+        sendResponse(200, 'success', 'No items were deleted');
     }
-} else {
-    sendResponse(500, 'error', 'Error removing items');
+} catch (PDOException $e) {
+    sendResponse(500, 'error', 'Error removing items: ' . $e->getMessage());
 }
