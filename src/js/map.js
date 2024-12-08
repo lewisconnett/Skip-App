@@ -59,7 +59,6 @@ async function initMap(latitude, longitude) {
 
     try {
         const availableItems = await fetchObjects();
-        console.log(availableItems.data)
         availableItems.data.forEach((item) => {
             if (item.status === 'available') {
                 addMarkerToMap(item);
@@ -116,21 +115,25 @@ document.addEventListener('click', async function (event) {
     const button = event.target;
     if (button && button.classList.contains('claim-item-btn')) {
         event.preventDefault();
-        const itemId = event.target.getAttribute('data-item-id');
+        const itemId = parseInt(event.target.getAttribute('data-item-id'), 10);
         if (itemId) {
             try {
                 const response = await axios.patch(
                     'https://lc1453.brighton.domains/SkipFind/api/items/update.php',
                     { item_id: itemId }
                 );
+                console.log(response);
                 if (response.data.status === 'success') {
                     button.setAttribute('disabled', 'true');
                     button.classList.add('disabled');
                     button.innerText = 'Item Claimed';
                     showToast('Item Claimed!');
+                    console.log(itemId);
 
                     const marker = markers.get(itemId);
+                    console.log('Marker: ', marker);
                     if (marker) {
+                        console.log(marker);
                         map.removeLayer(marker);
                         markers.delete(itemId);
                     }

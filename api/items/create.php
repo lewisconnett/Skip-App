@@ -5,9 +5,10 @@ include '../includes/db.php';
 include '../includes/functions.php';
 include '../includes/validation.php';
 include '../includes/utils/fileUpload.php';
+include '../includes/services/ItemService.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== "POST") {
-    sendResponse(405, 'error', 'Method Not Allowed');
+    sendResponse(405, 'error', 'Method No   t Allowed');
 }
 
 if (!isset($_POST['iname']) || !isset($_POST['idescription']) || !isset($_POST['ilatitude']) || !isset($_POST['ilongitude']) || !isset($_FILES['iimage'])) {
@@ -47,28 +48,23 @@ if ($uploadResult['error'] === true) {
 }
 
 
-$sql = "INSERT INTO objects (name, description, latitude, longitude, image) VALUES (:name, :description, :latitude, :longitude, :image)";
-$stmt = $pdo->prepare($sql);
-$stmt->bindParam(':name', $name, PDO::PARAM_STR);
-$stmt->bindParam(':description', $description, PDO::PARAM_STR);
-$stmt->bindParam(':latitude', $latitude);
-$stmt->bindParam(':longitude', $longitude);
-$stmt->bindParam(':image', $uniqueFilename);
-
 try {
-    $stmt->execute();
+    $newItemId = createItem($pdo, $name, $description, $latitude, $longitude, $uniqueFilename);
 
-    $newItem = [
-        'id' => $pdo->lastInsertId(),
-        'name' => $name,
-        'description' => $description,
-        'latitude' => $latitude,
-        'longitude' => $longitude,
-        'image' => $uniqueFilename
-    ];
+    if ($newItemId) {
+        $newItem = [
+            'id' => $newItemId,
+            'name' => $name,
+            'description' => $description,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'image' => $uniqueFilename
+        ];
 
-    sendResponse(201, 'success', 'Item successfully added', $newItem);
-    exit;
+        sendResponse(201, 'success', 'Item successfully added', $newItem);
+    } else {
+        sendResponse(500, 'error', 'Error inserting record');
+    }
 } catch (PDOException $e) {
     sendResponse(500, 'error', 'Error inserting record' . $e->getMessage());
 }

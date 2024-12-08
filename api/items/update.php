@@ -3,6 +3,7 @@
 header("Content-Type: application/json");
 include '../includes/db.php';
 include '../includes/functions.php';
+include '../includes/services/ItemService.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== "PATCH") {
     sendResponse(405, 'error', 'Method Not Allowed');
@@ -18,19 +19,13 @@ if (!$itemId) {
     exit;
 }
 
-$sql = 'UPDATE objects SET status = "taken" WHERE id = :id';
-$stmt = $pdo->prepare($sql);
-$stmt->bindParam(':id', $itemId, PDO::PARAM_INT);
-
 try {
 
-    $stmt->execute();
-
-    if ($stmt->rowCount() > 0) {
-        sendResponse(200, 'success', 'Item status updated successfully');
-    } else {
+    if (!updateItem($pdo, $itemId)) {
         sendResponse(404, 'error', 'Item not found');
+        exit;
     }
+    sendResponse(200, 'success', 'Item status updated successfully');
 } catch (PDOException $e) {
     sendResponse(500, 'error', 'There was a problem updating the record: ' . $e->getMessage());
 }
