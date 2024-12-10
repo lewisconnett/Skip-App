@@ -1,4 +1,4 @@
-function toggleButtonState(button, isLoading, buttonText) {
+export function toggleButtonState(button, isLoading, buttonText) {
     const spinner = button.querySelector('#spinner');
     const text = button.querySelector('#button-text');
 
@@ -12,7 +12,7 @@ function toggleButtonState(button, isLoading, buttonText) {
     }
 }
 
-function showToast(message) {
+export function showToast(message) {
     const toastLiveExample = document.querySelector('#liveToast');
 
     document.querySelector('#toast-body').textContent = message;

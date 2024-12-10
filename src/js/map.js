@@ -1,10 +1,12 @@
+import { showToast } from "./view.js";
+
 const DEFAULT_LATITUDE = 50.8262;
 const DEFAULT_LONGITUDE = -0.1356;
 
 let map;
 const markers = new Map();
 
-async function getUsersLocation() {
+export async function getUsersLocation() {
     if (navigator.geolocation) {
         return new Promise((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(
@@ -72,7 +74,7 @@ async function initMap(latitude, longitude) {
     }
 }
 
-function addMarkerToMap(item) {
+export function addMarkerToMap(item) {
     let customMarker = L.icon({
         iconUrl: 'assets/icons/marker-icon.svg',
         iconAnchor: [12, 41],
@@ -122,18 +124,16 @@ document.addEventListener('click', async function (event) {
                     'https://lc1453.brighton.domains/SkipFind/api/items/update.php',
                     { item_id: itemId }
                 );
-                console.log(response);
+                console.log(response.data);
                 if (response.data.status === 'success') {
                     button.setAttribute('disabled', 'true');
                     button.classList.add('disabled');
                     button.innerText = 'Item Claimed';
                     showToast('Item Claimed!');
-                    console.log(itemId);
 
                     const marker = markers.get(itemId);
-                    console.log('Marker: ', marker);
+                    
                     if (marker) {
-                        console.log(marker);
                         map.removeLayer(marker);
                         markers.delete(itemId);
                     }

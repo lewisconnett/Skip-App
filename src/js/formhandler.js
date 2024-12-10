@@ -1,13 +1,7 @@
-const API_URL = 'https://lc1453.brighton.domains/SkipFind/api/items/create.php';
+import { showToast, toggleButtonState } from './view.js';
+import { addMarkerToMap, getUsersLocation } from './map.js';
 
-async function submitFormData(formData) {
-    try {
-        const response = await axios.post(API_URL, formData);
-        return response.data.status;
-    } catch (error) {
-        console.error('Error sending form data: ', error);
-    }
-}
+const API_URL = 'https://lc1453.brighton.domains/SkipFind/api/items/create.php';
 
 function validateFormData(form) {
     const name = form.get('iname').trim() || '';
@@ -62,7 +56,6 @@ async function getCachedLocation() {
     if (!cachedLocation) {
         cachedLocation = await getUsersLocation();
     }
-    console.log(cachedLocation);
     return cachedLocation;
 }
 
@@ -100,7 +93,7 @@ window.addEventListener('load', () => {
                         form.reset();
                         form.classList.add('d-none');
                         showToast('Your Item was Added!');
-                    } else {
+                    } else {    
                         console.error('Error adding item:', response.data);
                         showToast('Failed to add item!');
                     }

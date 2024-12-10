@@ -5,12 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="src/styles/css/styles.css">
-    <link rel="stylesheet" href="leaflet/leaflet.css" />
+    <link rel="stylesheet" href="leaflet/leaflet.css">
     <script src="leaflet/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="src/js/map.js" defer></script>
-    <script type="module" src="src/js/formhandler.js" defer></script>
-    <script src="src/js/view.js" defer></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="icon" href="assets/favicon/favicon.ico" type="image/x-icon">
     <title>Skip App</title>
@@ -45,11 +42,11 @@
         </div>
         <div class="mb-3">
             <label class="form-label" for="idescription">Description:</label>
-            <textarea class="form-control" type="text" id="idescription" name="idescription" placeholder="Enter description" rows="3" required></textarea>
+            <textarea class="form-control" id="idescription" name="idescription" placeholder="Enter description" rows="3" required></textarea>
         </div>
         <div class="mb-3">
-            <label for="iimage" class="form-label" accepts="image/png, image/jpg, image/jpeg">Upload an Image: </label>
-            <input class="form-control" type="file" id="iimage" name="iimage" required></input>
+            <label for="iimage" class="form-label">Upload an Image: </label>
+            <input class="form-control" type="file" id="iimage" name="iimage" required>
         </div>
         <button type="submit" class="btn btn-primary mx-auto mb-3">
             <span class="spinner-border spinner-border-sm visually-hidden" id="spinner" aria-hidden="true"></span>
@@ -70,6 +67,9 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script type="module" src="src/js/map.js"></script>
+    <script type="module" src="src/js/formhandler.js"></script>
+    <script type="module" src="src/js/view.js"></script>
 </body>
 
 </html>
