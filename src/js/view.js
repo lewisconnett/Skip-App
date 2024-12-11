@@ -1,3 +1,9 @@
+/**
+ * Toggles the state of a button to indicate loading or normal state
+ * @param {HTMLElement} button - The button element to toggle
+ * @param {boolean} isLoading - Whether the button should be in a loading state
+ * @param {string} buttonText - The text to display on the button
+ */
 export function toggleButtonState(button, isLoading, buttonText) {
     const spinner = button.querySelector('#spinner');
     const text = button.querySelector('#button-text');
@@ -12,6 +18,10 @@ export function toggleButtonState(button, isLoading, buttonText) {
     }
 }
 
+/**
+ * Displays a Bootstrap toast notification with a specified message
+ * @param {string} message - The message to display in the toast
+ */
 export function showToast(message) {
     const toastLiveExample = document.querySelector('#liveToast');
 
